@@ -1,1 +1,0 @@
- D:\\Users\\gihol\\Documents\\AndroidStudioProjects\\catalogocasamento\\.dart_tool\\flutter_build\\284977000467daf2a0249bd2d3b3b144\\native_assets.yaml: 

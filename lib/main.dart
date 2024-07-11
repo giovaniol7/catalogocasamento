@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../connections/firebase_options.dart';
+import 'firebase_options.dart';
 import '../controllers/variaveis.dart';
 import '../view/TelaLogin.dart';
 import '../view/TelaCadastro.dart';
