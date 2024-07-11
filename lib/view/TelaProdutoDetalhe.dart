@@ -27,12 +27,20 @@ class _TelaProdutoDetalheState extends State<TelaProdutoDetalhe> {
   }
 
   Future<void> carregarDados() async {
-    String tokenValue = await recuperarValor();
-    uidNoivos = await idNoivos();
-    setState(() {
-      uidNoivos = uidNoivos;
-      token = tokenValue;
-    });
+    try {
+      String tokenValue = await recuperarValor();
+      uidNoivos = await idNoivos();
+      if (tokenValue.isNotEmpty) {
+        setState(() {
+          token = tokenValue;
+        });
+      }
+      setState(() {
+        uidNoivos = uidNoivos;
+      });
+    } catch (e) {
+      print('Erro buscar Token.');
+    }
   }
 
   @override
@@ -57,10 +65,18 @@ class _TelaProdutoDetalheState extends State<TelaProdutoDetalhe> {
                   background: product['urlImageProduto'].toString().isNotEmpty
                       ? Image.network(
                           product['urlImageProduto'],
-                          alignment: Alignment.center,
                           fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height / 5,
+                          alignment: Alignment.center,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              alignment: Alignment.center,
+                              child: const Icon(Icons.error, size: 48.0, color: Colors.red),
+                            );
+                          },
                         )
-                      : GifView.asset('lib/assets/gif/gifPresente.gif', frameRate: 30),
+                      : Image.asset('lib/assets/icon/present.png'),
                 ),
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(45),
@@ -191,7 +207,7 @@ class _TelaProdutoDetalheState extends State<TelaProdutoDetalhe> {
             top: MediaQuery.of(context).padding.top + 8.0,
             left: 8.0,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white70),
+              icon: const Icon(Icons.arrow_back, color: Colors.grey),
               onPressed: () {
                 AppVariaveis().reset();
                 Navigator.of(context).pop();
@@ -203,7 +219,7 @@ class _TelaProdutoDetalheState extends State<TelaProdutoDetalhe> {
               top: MediaQuery.of(context).padding.top + 8.0,
               right: 8.0,
               child: IconButton(
-                icon: const Icon(Icons.edit, color: Colors.white70),
+                icon: const Icon(Icons.edit, color: Colors.grey),
                 onPressed: () {
                   AppVariaveis().uidProdutoNoivos = product['uidProdutoNoivos'];
                   Navigator.pushNamed(context, '/editarProdutosNoivos');

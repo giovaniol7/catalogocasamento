@@ -24,11 +24,15 @@ class _TelaInicialState extends State<TelaInicial> {
   }
 
   Future<void> carregarDados() async {
-    String tokenValue = await recuperarValor();
-    if (tokenValue.isNotEmpty) {
-      setState(() {
-        token = tokenValue;
-      });
+    try {
+      String tokenValue = await recuperarValor();
+      if (tokenValue.isNotEmpty) {
+        setState(() {
+          token = tokenValue;
+        });
+      }
+    } catch (e) {
+      print('Erro buscar Token.');
     }
   }
 

@@ -16,8 +16,8 @@ Widget cardProdutos(context, doc, nomeNoivos) {
                   borderRadius: BorderRadius.circular(15.0),
                   child: doc.data()['urlImageProduto'].toString().isNotEmpty
                       ? Image.network(
-                          fit: BoxFit.cover,
                           doc.data()['urlImageProduto'],
+                          fit: BoxFit.cover,
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height / 5,
                           alignment: Alignment.center,

@@ -287,6 +287,7 @@ class _TelaEditarPerfilState extends State<TelaEditarPerfil> {
                           ),
                           const SizedBox(height: 40),
                           Row(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [

@@ -28,10 +28,15 @@ Future<String?> uploadImageNoivos(XFile? pickedFile, String colecao) async {
       uploadTask = ref.putFile(File(pickedFile.path));
     }
 
-    final snapshot = await uploadTask.whenComplete(() => null);
-    final url = await snapshot.ref.getDownloadURL();
+    try {
+      await uploadTask;
 
-    return url;
+      final url = await ref.getDownloadURL();
+      return url;
+    } catch (e) {
+      print('Error uploading image: $e');
+      return null;
+    }
   }
   return null;
 }

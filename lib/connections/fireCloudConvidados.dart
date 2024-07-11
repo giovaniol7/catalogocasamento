@@ -52,7 +52,7 @@ adicionarConvidados(context, nomeConvidado, telefoneConvidado, nomeNoivos, uidPr
     await novoDocumento.update({'uidConvidado': uidConvidado});
     print("ID do convidado atualizado com sucesso: $uidConvidado");
 
-    var varAtivoProduto = 0;
+    var varAtivoProduto = '0';
     await editarConvidadosProdutosNoivos(context, uidProdutoNoivos, varAtivoProduto);
 
     sucesso(context, 'O Produto reservado com sucesso!');

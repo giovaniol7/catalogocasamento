@@ -184,7 +184,7 @@ class _TelaAdicionarProdutosNoivosState extends State<TelaAdicionarProdutosNoivo
                               const SizedBox(width: 20),
                               Container(
                                 height: 60,
-                                width: 200,
+                                width: 125,
                                 alignment: Alignment.center,
                                 decoration: AppEstilo().decoracaoBotaoNormal,
                                 child: SizedBox.expand(

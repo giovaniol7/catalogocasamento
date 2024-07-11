@@ -25,16 +25,20 @@ class _TelaProdutosNoivosState extends State<TelaProdutosNoivos> {
   }
 
   Future<void> carregarDados() async {
-    String tokenValue = await recuperarValor();
-    uidNoivos = await idNoivos();
-    if (tokenValue.isNotEmpty) {
+    try {
+      String tokenValue = await recuperarValor();
+      uidNoivos = await idNoivos();
+      if (tokenValue.isNotEmpty) {
+        setState(() {
+          token = tokenValue;
+        });
+      }
       setState(() {
-        token = tokenValue;
+        uidNoivos = uidNoivos;
       });
+    } catch (e) {
+      print('Erro buscar Token.');
     }
-    setState(() {
-      uidNoivos = uidNoivos;
-    });
   }
 
   @override

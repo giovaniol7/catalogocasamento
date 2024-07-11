@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,10 +27,15 @@ Future<String?> uploadImageProdutos(XFile? pickedFile, String colecao) async {
       uploadTask = ref.putFile(File(pickedFile.path));
     }
 
-    final snapshot = await uploadTask.whenComplete(() => null);
-    final url = await snapshot.ref.getDownloadURL();
+    try {
+      await uploadTask;
 
-    return url;
+      final url = await ref.getDownloadURL();
+      return url;
+    } catch (e) {
+      print('Error uploading image: $e');
+      return null;
+    }
   }
   return null;
 }
