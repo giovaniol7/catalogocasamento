@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/TextFormField.dart';
 import '../widgets/mensagem.dart';
@@ -191,53 +192,62 @@ class _TelaCadastroState extends State<TelaCadastro> {
                             validator: true,
                           ),
                           const SizedBox(height: 20),
-                          textFormField(
-                            'Senha',
-                            AppVariaveis().txtSenha,
-                            icone: Icons.lock,
-                            key: AppVariaveis().keySenha,
-                            validator: true,
-                            sufIcon: IconButton(
-                              icon: Icon(
-                                AppVariaveis().obscureText
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: AppEstilo().colorIconPadrao,
-                              ),
-                              onPressed: () {
-                                AppVariaveis().toggleObscureText();
-                              },
-                            ),
-                            senha: AppVariaveis().obscureText,
+                          Consumer<AppVariaveis>(
+                            builder: (context, appVariaveis, child) {
+                              return textFormField(
+                                'Senha',
+                                AppVariaveis().txtSenha,
+                                icone: Icons.lock,
+                                key: AppVariaveis().keySenha,
+                                validator: true,
+                                sufIcon: IconButton(
+                                  icon: Icon(
+                                    AppVariaveis().obscureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: AppEstilo().colorIconPadrao,
+                                  ),
+                                  onPressed: () {
+                                    AppVariaveis().toggleObscureText();
+                                  },
+                                ),
+                                senha: AppVariaveis().obscureText,
+                              );
+                            },
                           ),
                           const SizedBox(height: 20),
-                          textFormField(
-                            'Confirmar Senha',
-                            AppVariaveis().txtSenhaCofirmar,
-                            icone: Icons.lock,
-                            key: AppVariaveis().keySenhaConfirmar,
-                            validator: true,
-                            sufIcon: IconButton(
-                              icon: Icon(
-                                AppVariaveis().obscureText2
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: AppEstilo().colorIconPadrao,
-                              ),
-                              onPressed: () {
-                                AppVariaveis().toggleObscureText2();
-                              },
-                            ),
-                            senha: AppVariaveis().obscureText2,
+                          Consumer<AppVariaveis>(
+                            builder: (context, appVariaveis, child) {
+                              return textFormField(
+                                'Confirmar Senha',
+                                AppVariaveis().txtSenhaCofirmar,
+                                icone: Icons.lock,
+                                key: AppVariaveis().keySenhaConfirmar,
+                                validator: true,
+                                sufIcon: IconButton(
+                                  icon: Icon(
+                                    AppVariaveis().obscureText2
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: AppEstilo().colorIconPadrao,
+                                  ),
+                                  onPressed: () {
+                                    AppVariaveis().toggleObscureText2();
+                                  },
+                                ),
+                                senha: AppVariaveis().obscureText2,
+                              );
+                            },
                           ),
                           const SizedBox(height: 40),
                           Row(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Container(
                                 height: 60,
-                                width: 200,
+                                width: 125,
                                 alignment: Alignment.center,
                                 decoration: AppEstilo().decoracaoBotaoNormal,
                                 child: SizedBox.expand(
@@ -257,7 +267,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                               const SizedBox(width: 20),
                               Container(
                                 height: 60,
-                                width: 200,
+                                width: 125,
                                 alignment: Alignment.center,
                                 decoration: AppEstilo().decoracaoBotaoNormal,
                                 child: SizedBox.expand(

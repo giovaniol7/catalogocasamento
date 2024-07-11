@@ -5,9 +5,8 @@ import '../controllers/variaveis.dart';
 import '../widgets/mensagem.dart';
 import 'fireAuth.dart';
 import 'fireCloudNoivos.dart';
-import 'fireCloudProdutosNoivos.dart';
 
-Future<String> retornarIDConvidados() async {
+/*Future<String> retornarIDConvidados() async {
   String id = '';
   String nomeColecaoNoivos = await retornarProdutoNomeNoivos();
 
@@ -22,13 +21,14 @@ Future<String> retornarIDConvidados() async {
   });
 
   return id;
-}
+}*/
 
 adicionarConvidados(context, nomeConvidado, telefoneConvidado, nomeNoivos, uidProdutoNoivos) async {
   try {
     String uidNoivos = await retornarIDNoivosPorNome(nomeNoivos);
     String uidConvidado = '';
     String nomeColecaoConvidadosNoivos = 'convidados$nomeNoivos';
+    String nomeColecaoProdutosNoivos = 'produtos$nomeNoivos';
     CollectionReference convidadosNoivos =
         FirebaseFirestore.instance.collection(nomeColecaoConvidadosNoivos);
 
@@ -52,134 +52,58 @@ adicionarConvidados(context, nomeConvidado, telefoneConvidado, nomeNoivos, uidPr
     await novoDocumento.update({'uidConvidado': uidConvidado});
     print("ID do convidado atualizado com sucesso: $uidConvidado");
 
-    var varAtivoProduto = '0';
-    await editarConvidadosProdutosNoivos(context, uidProdutoNoivos, varAtivoProduto);
+    editarConvidadosProdutosNoivos(context, nomeColecaoProdutosNoivos, uidProdutoNoivos);
 
     sucesso(context, 'O Produto reservado com sucesso!');
     AppVariaveis().reset();
-    Navigator.pop(context);
+    Navigator.of(context).popUntil((route) => route.isFirst);
   } catch (e) {
     print('Erro ao reservar produto.');
     erro(context, 'Erro ao reservar produto. Tente novamente.');
   }
 }
 
-editarConvidados(context, urlImageProduto, nomeProduto, precoProduto, marcaProduto, lojaSiteProduto,
-    descricaoProduto, varAtivoProduto) async {
-  String nomeColecaoNoivos = await retornarProdutoNomeNoivos();
-
-  Map<String, dynamic> data = {
-    'uidNoivos': idNoivos(),
-    'urlImageProduto': urlImageProduto,
-    'nomeProduto': nomeProduto,
-    'precoProduto': precoProduto,
-    'marcaProduto': marcaProduto,
-    'lojaSiteProduto': lojaSiteProduto,
-    'descricaoProduto': descricaoProduto,
-    'varAtivoProduto': varAtivoProduto
-  };
-  String id = await retornarIDConvidados();
-  await FirebaseFirestore.instance.collection(nomeColecaoNoivos).doc(id).update(data);
-  sucesso(context, 'O produto foi editado com sucesso.');
-  AppVariaveis().reset();
-  Navigator.pop(context);
-}
-
-Future<Map<String, String>> listarConvidados() async {
-  String id = '';
+recuperarConvidadosPorIdProduto(idProduto) async {
+  String uidConvidado = '';
   String uidNoivos = '';
-  String urlImageProduto = '';
-  String nomeProduto = '';
-  String precoProduto = '';
-  String marcaProduto = '';
-  String lojaSiteProduto = '';
-  String descricaoProduto = '';
-  String varAtivoProduto = '';
-  Map<String, String> produtoNoivos = {};
-  String nomeColecaoNoivos = await retornarProdutoNomeNoivos();
+  String uidProdutoNoivos = '';
+  String nomeConvidado = '';
+  String telefoneConvidado = '';
+  Map<String, String> convidadoNoivos = {};
+  String nomeNoivos = await retornarNomeNoivosPorID(idNoivos());
+  String nomeColecaoNoivos = 'convidados$nomeNoivos';
 
   await FirebaseFirestore.instance
       .collection(nomeColecaoNoivos)
-      .where('uid', isEqualTo: idNoivos())
+      .where('uidProdutoNoivos', isEqualTo: idProduto)
       .get()
       .then((q) {
     if (q.docs.isNotEmpty) {
-      id = q.docs[0].id;
+      uidConvidado = q.docs[0].id;
       uidNoivos = q.docs[0].data()['uidNoivos'];
-      urlImageProduto = q.docs[0].data()['urlImageProduto'];
-      nomeProduto = q.docs[0].data()['nomeProduto'];
-      precoProduto = q.docs[0].data()['precoProduto'];
-      marcaProduto = q.docs[0].data()['marcaProduto'];
-      lojaSiteProduto = q.docs[0].data()['lojaSiteProduto'];
-      descricaoProduto = q.docs[0].data()['descricaoProduto'];
-      varAtivoProduto = q.docs[0].data()['varAtivoProduto'];
+      uidProdutoNoivos = q.docs[0].data()['uidProdutoNoivos'];
+      nomeConvidado = q.docs[0].data()['nomeConvidado'];
+      telefoneConvidado = q.docs[0].data()['telefoneConvidado'];
     }
   });
 
-  produtoNoivos = {
-    'id': id,
-    'uid': uidNoivos,
-    'urlImageProduto': urlImageProduto,
-    'nomeProduto': nomeProduto,
-    'precoProduto': precoProduto,
-    'marcaProduto': marcaProduto,
-    'lojaSiteProduto': lojaSiteProduto,
-    'descricaoProduto': descricaoProduto,
-    'varAtivoProduto': varAtivoProduto
-  };
-  return produtoNoivos;
-}
-
-recuperarPorIDConvidados() async {
-  String id = '';
-  String uidNoivos = '';
-  String urlImageProduto = '';
-  String nomeProduto = '';
-  String precoProduto = '';
-  String marcaProduto = '';
-  String lojaSiteProduto = '';
-  String descricaoProduto = '';
-  String varAtivoProduto = '';
-  Map<String, String> produtoNoivos = {};
-  String nomeColecaoNoivos = await retornarProdutoNomeNoivos();
-
-  await FirebaseFirestore.instance
-      .collection(nomeColecaoNoivos)
-      .where('uid', isEqualTo: idNoivos())
-      .get()
-      .then((q) {
-    if (q.docs.isNotEmpty) {
-      id = q.docs[0].id;
-      uidNoivos = q.docs[0].data()['uidNoivos'];
-      urlImageProduto = q.docs[0].data()['urlImageProduto'];
-      nomeProduto = q.docs[0].data()['nomeProduto'];
-      precoProduto = q.docs[0].data()['precoProduto'];
-      marcaProduto = q.docs[0].data()['marcaProduto'];
-      lojaSiteProduto = q.docs[0].data()['lojaSiteProduto'];
-      descricaoProduto = q.docs[0].data()['descricaoProduto'];
-      varAtivoProduto = q.docs[0].data()['varAtivoProduto'];
-    }
-  });
-
-  produtoNoivos = {
-    'id': id,
-    'uid': uidNoivos,
-    'urlImageProduto': urlImageProduto,
-    'nomeProduto': nomeProduto,
-    'precoProduto': precoProduto,
-    'marcaProduto': marcaProduto,
-    'lojaSiteProduto': lojaSiteProduto,
-    'descricaoProduto': descricaoProduto,
-    'varAtivoProduto': varAtivoProduto
+  convidadoNoivos = {
+    'uidConvidado': uidConvidado,
+    'uidNoivos': uidNoivos,
+    'uidProdutoNoivos': uidProdutoNoivos,
+    'nomeConvidado': nomeConvidado,
+    'telefoneConvidado': telefoneConvidado
   };
 
-  return produtoNoivos;
+  return convidadoNoivos;
 }
 
-editarConvidadosProdutosNoivos(context, uidProdutoNoivos, varAtivoProduto) async {
-  String nomeColecaoNoivos = await retornarProdutoNomeNoivos();
+editarConvidadosProdutosNoivos(context, nomeColecaoProdutosNoivos, uidProdutoNoivos) async {
+  var varAtivoProduto = "0";
 
   Map<String, dynamic> data = {'varAtivoProduto': varAtivoProduto};
-  String id = await retornarIDProdutosNoivos(uidProdutoNoivos);
-  await FirebaseFirestore.instance.collection(nomeColecaoNoivos).doc(id).update(data);
+  await FirebaseFirestore.instance
+      .collection(nomeColecaoProdutosNoivos)
+      .doc(uidProdutoNoivos)
+      .update(data);
 }

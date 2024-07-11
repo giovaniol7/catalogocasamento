@@ -58,7 +58,9 @@ class _TelaInicialState extends State<TelaInicial> {
             PopupMenuButton<String>(
               onSelected: (String result) {
                 if (result == 'opcao1') {
-                  setState(() {});
+                  setState(() {
+                    Navigator.pushNamed(context, '/reservasProdutosNoivos');
+                  });
                 }
                 if (result == 'opcao2') {
                   setState(() {

@@ -281,16 +281,14 @@ class _TelaProdutoDetalheState extends State<TelaProdutoDetalhe> {
               ),
               onPressed: () {
                 if (validarCampos()) {
-                  setState(() async {
-                    await adicionarConvidados(
+                  setState(() {
+                    adicionarConvidados(
                         context,
                         AppVariaveis().txtNomeConvidado.text.trim(),
-                        AppVariaveis().txtTelefoneConvidado.text.trim(),
+                        AppVariaveis().txtTelefoneConvidado.text,
                         product['nomeNoivos'],
                         product['uidProdutoNoivos']);
                   });
-                  AppVariaveis().reset();
-                  Navigator.pop(context);
                 }
               },
               child: Text('Salvar', style: AppEstilo().estiloTextoPadrao),

@@ -52,6 +52,8 @@ class AppVariaveis extends ChangeNotifier {
   var varAtivoProduto;
 
   //Convidados
+  String uidConvidado = '';
+  String nomeConvidado = '';
   TextEditingController txtNomeConvidado = TextEditingController();
   TextEditingController txtTelefoneConvidado = TextEditingController();
   GlobalKey<FormState> keyNomeConvidado = GlobalKey<FormState>();

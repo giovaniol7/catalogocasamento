@@ -15,6 +15,7 @@ import '../view/TelaProdutosNoivos.dart';
 import '../view/TelaAdicionarProdutosNoivos.dart';
 import '../view/TelaEditarProdutosNoivos.dart';
 import '../view/TelaProdutoDetalhe.dart';
+import '../view/TelaReservasProdutosNoivos.dart';
 
 void main() async {
   String? token;
@@ -44,6 +45,7 @@ void main() async {
         '/adicionarProdutosNoivos': (context) => const TelaAdicionarProdutosNoivos(),
         '/editarProdutosNoivos': (context) => const TelaEditarProdutosNoivos(),
         '/produtoDetalhe': (context) => const TelaProdutoDetalhe(),
+        '/reservasProdutosNoivos': (context) => const TelaReservasProdutosNoivos(),
       },
     )),
   );

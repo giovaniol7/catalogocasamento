@@ -141,12 +141,13 @@ class _TelaAdicionarProdutosNoivosState extends State<TelaAdicionarProdutosNoivo
                               boardType: 'multiLinhas'),
                           const SizedBox(height: 40),
                           Row(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
                                 height: 60,
-                                width: 200,
+                                width: 125,
                                 alignment: Alignment.center,
                                 decoration: AppEstilo().decoracaoBotaoNormal,
                                 child: SizedBox.expand(

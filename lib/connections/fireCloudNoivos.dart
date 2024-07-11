@@ -40,6 +40,22 @@ Future<String> retornarIDNoivosPorNome(nomeNoivos) async {
   return uidNoivosNoivos;
 }
 
+Future<String> retornarNomeNoivosPorID(idNoivos) async {
+  String nomeNoivos = '';
+
+  await FirebaseFirestore.instance
+      .collection(nomeColecao)
+      .where('uidNoivos', isEqualTo: idNoivos)
+      .get()
+      .then((q) {
+    if (q.docs.isNotEmpty) {
+      nomeNoivos = q.docs[0].data()['nomeNoivos'];
+    }
+  });
+
+  return nomeNoivos;
+}
+
 Future<String> retornarProdutoNomeNoivos() async {
   String nomeNoivos = '';
   String nomeNoiva = '';

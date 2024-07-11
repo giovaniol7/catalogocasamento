@@ -71,7 +71,9 @@ class _TelaProdutosNoivosState extends State<TelaProdutosNoivos> {
             PopupMenuButton<String>(
               onSelected: (String result) {
                 if (result == 'opcao1') {
-                  setState(() {});
+                  setState(() {
+                    Navigator.pushNamed(context, '/reservasProdutosNoivos');
+                  });
                 }
                 if (result == 'opcao2') {
                   setState(() {
@@ -163,8 +165,7 @@ class _TelaProdutosNoivosState extends State<TelaProdutosNoivos> {
               shape: const CircleBorder(),
               onPressed: () {
                 String tipo = 'adicionar';
-                Navigator.pushNamed(context, '/adicionarProdutosNoivos',
-                    arguments: {'tipo': '$tipo'});
+                Navigator.pushNamed(context, '/adicionarProdutosNoivos');
               },
               backgroundColor: AppEstilo().colorBackgroundIcon,
               child: Icon(Icons.add, color: AppEstilo().colorIconImage, size: 35),

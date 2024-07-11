@@ -34,7 +34,7 @@ class _TelaEditarProdutosNoivosState extends State<TelaEditarProdutosNoivos> {
   carregarDados(uidProdutoNoivos) async {
     var produtoNoivos = await listarProdutosNoivos(uidProdutoNoivos);
     setState(() {
-      AppVariaveis().uidProdutoNoivos = produtoNoivos['uidProdutoNoivos']!;
+      AppVariaveis().uidProdutoNoivos = produtoNoivos['id']!;
       AppVariaveis().UIDNoivos = produtoNoivos['uidNoivos']!;
       AppVariaveis().urlImageProduto = produtoNoivos['urlImageProduto']!;
       AppVariaveis().urlImageProdutoTemp = produtoNoivos['urlImageProduto']!;
@@ -234,6 +234,7 @@ class _TelaEditarProdutosNoivosState extends State<TelaEditarProdutosNoivos> {
                               boardType: 'multiLinhas'),
                           const SizedBox(height: 40),
                           Row(
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [

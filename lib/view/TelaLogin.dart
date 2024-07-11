@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/estilos.dart';
-//import '../connections/fireAuth.dart';
 
 import '../widgets/TextFormField.dart';
-//import '../widgets/customButton.dart';
 
 class TelaLogin extends StatefulWidget {
   const TelaLogin({Key? key}) : super(key: key);
@@ -51,19 +49,23 @@ class _TelaLoginState extends State<TelaLogin> {
                 textFormField("E-mail", AppVariaveis().txtEmail,
                     boardType: TextInputType.emailAddress),
                 const SizedBox(height: 10),
-                textFormField(
-                  "Senha",
-                  AppVariaveis().txtSenha,
-                  sufIcon: IconButton(
-                    icon: Icon(
-                      AppVariaveis().obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: AppEstilo().colorIconPadrao,
-                    ),
-                    onPressed: () {
-                      AppVariaveis().toggleObscureText();
-                    },
-                  ),
-                  senha: AppVariaveis().obscureText,
+                Consumer<AppVariaveis>(
+                  builder: (context, appVariaveis, child) {
+                    return textFormField(
+                      "Senha",
+                      appVariaveis.txtSenha,
+                      sufIcon: IconButton(
+                        icon: Icon(
+                          appVariaveis.obscureText ? Icons.visibility_off : Icons.visibility,
+                          color: AppEstilo().colorIconPadrao,
+                        ),
+                        onPressed: () {
+                          appVariaveis.toggleObscureText();
+                        },
+                      ),
+                      senha: appVariaveis.obscureText,
+                    );
+                  },
                 ),
                 Container(
                   height: 40,
