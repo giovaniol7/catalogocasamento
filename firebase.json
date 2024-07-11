@@ -1,0 +1,45 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "catalogocasamento-488a4",
+          "appId": "1:122204245827:android:f619155905e28c88d1e9f6",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "catalogocasamento-488a4",
+          "configurations": {
+            "android": "1:122204245827:android:f619155905e28c88d1e9f6",
+            "ios": "1:122204245827:ios:36f59129c3c3abe9d1e9f6",
+            "web": "1:122204245827:web:fd589e0a7eca71a8d1e9f6"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "site": "catalogocasamento",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

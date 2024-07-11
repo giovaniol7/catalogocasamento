@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "noivos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "nomeNoiva",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "dtCasamento",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
