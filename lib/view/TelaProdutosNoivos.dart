@@ -46,6 +46,7 @@ class _TelaProdutosNoivosState extends State<TelaProdutosNoivos> {
     final arguments = ModalRoute.of(context)?.settings.arguments as Map?;
     final nomeNoiva = arguments?['nomeNoiva'] as String?;
     final nomeNoivo = arguments?['nomeNoivo'] as String?;
+    final idNoivos = arguments?['idNoivos'] as String?;
     String nomeNoivaSemEspacos = nomeNoiva!.replaceAll(" ", "");
     String nomeNoivoSemEspacos = nomeNoivo!.replaceAll(" ", "");
     String nomeNoivos = '$nomeNoivaSemEspacos$nomeNoivoSemEspacos';
@@ -109,7 +110,7 @@ class _TelaProdutosNoivosState extends State<TelaProdutosNoivos> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.75,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection(nomeColecao).snapshots(),
+            stream: FirebaseFirestore.instance.collection(nomeColecao).orderBy('nomeProduto').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print('Erro no stream: ${snapshot.error}');
@@ -131,7 +132,7 @@ class _TelaProdutosNoivosState extends State<TelaProdutosNoivos> {
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,
                             mainAxisExtent: (MediaQuery.of(context).size.height / 7) + 160,
-                            crossAxisCount: 2),
+                            crossAxisCount: 1),
                         padding: const EdgeInsets.all(10),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => AspectRatio(
@@ -160,11 +161,10 @@ class _TelaProdutosNoivosState extends State<TelaProdutosNoivos> {
           ),
         ),
       ),
-      floatingActionButton: token.isNotEmpty && token == uidNoivos
+      floatingActionButton: token.isNotEmpty && uidNoivos == idNoivos
           ? FloatingActionButton(
               shape: const CircleBorder(),
               onPressed: () {
-                String tipo = 'adicionar';
                 Navigator.pushNamed(context, '/adicionarProdutosNoivos');
               },
               backgroundColor: AppEstilo().colorBackgroundIcon,

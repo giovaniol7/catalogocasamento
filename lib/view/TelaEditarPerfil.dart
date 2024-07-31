@@ -38,6 +38,7 @@ class _TelaEditarPerfilState extends State<TelaEditarPerfil> {
       AppVariaveis().txtDtCasamento.text = noivos['dtCasamento']!;
       AppVariaveis().txtEmail.text = noivos['email']!;
       AppVariaveis().txtTelefone.text = noivos['telefone']!;
+      AppVariaveis().txtSenhaProdutos.text = noivos['senhaProdutos']!;
       AppVariaveis().varAtivoNoivos = noivos['varAtivoNoivos']!;
     });
   }
@@ -78,6 +79,7 @@ class _TelaEditarPerfilState extends State<TelaEditarPerfil> {
               AppVariaveis().txtDtCasamento.text,
               AppVariaveis().txtEmail.text,
               AppVariaveis().txtTelefone.text,
+              AppVariaveis().txtSenhaProdutos.text,
               AppVariaveis().txtSenha.text,
               AppVariaveis().varAtivoNoivos);
         } else {
@@ -248,6 +250,30 @@ class _TelaEditarPerfilState extends State<TelaEditarPerfil> {
                             boardType: 'numeros',
                             key: AppVariaveis().keyTelefone,
                             validator: true,
+                          ),
+                          const SizedBox(height: 20),
+                          Consumer<AppVariaveis>(
+                            builder: (context, appVariaveis, child) {
+                              return textFormField(
+                                'Senha para acesso dos Convidados',
+                                AppVariaveis().txtSenhaProdutos,
+                                icone: Icons.lock,
+                                key: AppVariaveis().keySenhaProdutos,
+                                validator: true,
+                                sufIcon: IconButton(
+                                  icon: Icon(
+                                    AppVariaveis().obscureText3
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: AppEstilo().colorIconPadrao,
+                                  ),
+                                  onPressed: () {
+                                    AppVariaveis().toggleObscureText3();
+                                  },
+                                ),
+                                senha: AppVariaveis().obscureText3,
+                              );
+                            },
                           ),
                           const SizedBox(height: 20),
                           Consumer<AppVariaveis>(

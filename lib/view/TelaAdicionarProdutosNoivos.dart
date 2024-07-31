@@ -1,10 +1,13 @@
 import 'dart:io';
 
-import 'package:brasil_fields/brasil_fields.dart';
-import 'package:catalogocasamento/connections/fireCloudNoivos.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:input_quantity/input_quantity.dart';
+import 'package:intl/intl.dart';
 
+import '../connections/fireCloudNoivos.dart';
 import '../connections/fireCloudProdutosNoivos.dart';
 import '../controllers/estilos.dart';
 import '../controllers/uploadImageProdutos.dart';
@@ -23,6 +26,22 @@ class _TelaAdicionarProdutosNoivosState extends State<TelaAdicionarProdutosNoivo
 
   bool validarCampos() {
     return _formKey.currentState!.validate();
+  }
+
+  calcularCota(preco, qtdCotaProduto) {
+    if (preco.isNotEmpty) {
+      preco = preco.replaceAll('.', '');
+      preco = preco.replaceAll(',', '.');
+      double a = double.parse(preco);
+      double resultado = a / qtdCotaProduto;
+
+      final NumberFormat formatador = NumberFormat.currency(locale: 'pt_BR', symbol: '', decimalDigits: 2);
+      AppVariaveis().valorCotaProduto = formatador.format(resultado);
+
+      return AppVariaveis().valorCotaProduto;
+    } else {
+      return 0.0;
+    }
   }
 
   @override
@@ -99,6 +118,25 @@ class _TelaAdicionarProdutosNoivosState extends State<TelaAdicionarProdutosNoivo
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  FlutterSwitch(
+                    activeText: "Cotar Produto",
+                    activeTextColor: AppEstilo().colorSwitchAtivoText,
+                    activeColor: AppEstilo().colorSwitchAtivo,
+                    inactiveText: "Não Cotar Produto",
+                    inactiveTextColor: AppEstilo().colorSwitchInativoText,
+                    inactiveColor: AppEstilo().colorSwitchInativo,
+                    value: AppVariaveis().switchValue,
+                    valueFontSize: 10.0,
+                    width: 110,
+                    borderRadius: 30.0,
+                    showOnOff: true,
+                    onToggle: (value) {
+                      setState(() {
+                        AppVariaveis().switchValue = value;
+                      });
+                    },
+                  ),
                   const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.all(10),
@@ -120,6 +158,33 @@ class _TelaAdicionarProdutosNoivosState extends State<TelaAdicionarProdutosNoivo
                             key: AppVariaveis().keyPrecoProduto,
                             validator: true,
                           ),
+                          AppVariaveis().switchValue == true
+                              ? const SizedBox(height: 20)
+                              : Container(),
+                          AppVariaveis().switchValue == true
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    InputQty.int(
+                                      minVal: 0,
+                                      onQtyChanged: (val) {
+                                        setState(() {
+                                          AppVariaveis().qtdCotaProduto = val;
+                                        });
+                                      },
+                                      decoration: const QtyDecorationProps(
+                                          qtyStyle: QtyStyle.classic,
+                                          width: 16,
+                                          isBordered: false,
+                                          borderShape: BorderShapeBtn.circle),
+                                    ),
+                                    Text(
+                                      'Valor de cada Cota: R\$ ${calcularCota(AppVariaveis().txtPrecoProduto.text, AppVariaveis().qtdCotaProduto)}',
+                                      style: AppEstilo().estiloTextoPadrao,
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                           const SizedBox(height: 20),
                           textFormField(
                             'Marca do Produto',
@@ -176,6 +241,9 @@ class _TelaAdicionarProdutosNoivosState extends State<TelaAdicionarProdutosNoivo
                                             AppVariaveis().txtMarcaProduto.text,
                                             AppVariaveis().txtLojaSiteProduto.text,
                                             AppVariaveis().txtDescricaoProduto.text,
+                                            AppVariaveis().qtdCotaProduto.toString(),
+                                            AppVariaveis().qtdCotaProdutoVenda.toString(),
+                                            AppVariaveis().valorCotaProduto.trim(),
                                             AppVariaveis().varAtivoProduto);
                                       }
                                     },

@@ -1,6 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:gif_view/gif_view.dart';
 
 import '../controllers/variaveis.dart';
 import '../controllers/estilos.dart';
@@ -123,10 +122,25 @@ class _TelaProdutoDetalheState extends State<TelaProdutoDetalhe> {
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              "R\$ ${product['precoProduto']}",
-                              style: TextStyle(color: Colors.orange.shade800, fontSize: 22),
-                            ),
+                            product['qtdCotaProduto'] != '1'
+                                ? Column(
+                                    children: [
+                                      Text(
+                                        "R\$ ${product['precoProduto']}",
+                                        style:
+                                            TextStyle(color: Colors.orange.shade800, fontSize: 22),
+                                      ),
+                                      Text(
+                                        "R\$ ${product['valorCotaProduto']}",
+                                        style:
+                                            TextStyle(color: Colors.orange.shade400, fontSize: 16),
+                                      )
+                                    ],
+                                  )
+                                : Text(
+                                    "R\$ ${product['precoProduto']}",
+                                    style: TextStyle(color: Colors.orange.shade800, fontSize: 22),
+                                  ),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -265,6 +279,13 @@ class _TelaProdutoDetalheState extends State<TelaProdutoDetalhe> {
                   key: AppVariaveis().keyTelefoneConvidado,
                   validator: true,
                 ),
+                product['qtdCotaProduto'] != '1' ? const SizedBox(height: 20) : Container(),
+                product['qtdCotaProduto'] != '1'
+                    ? Text(
+                        'Você está adquirindo uma Cota desse Produto!',
+                        style: AppEstilo().estiloTextoPadrao,
+                      )
+                    : Container(),
               ],
             ),
           ),

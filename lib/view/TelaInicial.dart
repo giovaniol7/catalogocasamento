@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../connections/fireCloudNoivos.dart';
 import '../connections/sharedPreference.dart';
 import '../controllers/estilos.dart';
 import '../connections/fireAuth.dart';
@@ -96,7 +95,8 @@ class _TelaInicialState extends State<TelaInicial> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.75,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('noivos').snapshots(),
+            stream:
+                FirebaseFirestore.instance.collection('noivos').orderBy('nomeNoivos').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return const Center(

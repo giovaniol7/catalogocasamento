@@ -57,6 +57,8 @@ Widget cardProdutos(context, doc, nomeNoivos) {
                     'lojaSiteProduto': doc.data()['lojaSiteProduto'],
                     'precoProduto': doc.data()['precoProduto'],
                     'descricaoProduto': doc.data()['descricaoProduto'],
+                    'qtdCotaProduto': doc.data()['qtdCotaProduto'],
+                    'valorCotaProduto': doc.data()['valorCotaProduto'],
                     'varAtivoProduto': doc.data()['varAtivoProduto'],
                     'nomeNoivos': nomeNoivos
                   });

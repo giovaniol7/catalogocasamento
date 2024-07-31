@@ -42,6 +42,10 @@ class AppEstilo {
   Color colorBackgroundIcon = const Color(0xFFEBE3F1);
   Color colorRadioListTile = const Color(0xCC000000);
   Color colorCard = const Color(0xFFEBE3F1);
+  Color colorSwitchInativo = const Color(0xFFE30B25);
+  Color colorSwitchInativoText = const Color(0xFFFFFFFF);
+  Color colorSwitchAtivo = const Color(0xFF5E3081);
+  Color colorSwitchAtivoText = const Color(0xFFFFFFFF);
 
   //BoxDecoration
   final BoxDecoration decoracaoContainerCard = BoxDecoration(

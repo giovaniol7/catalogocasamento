@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import '../connections/fireCloudConvidados.dart';
 import '../controllers/estilos.dart';
-import '../controllers/variaveis.dart';
 
 Widget cardReservas(context, doc, nomeNoivos) {
+  String nomeReserva = '';
+  String telefoneReserva = '';
   recuperarConvidadosPorIdProduto(doc.data()['uidProdutoNoivos']).then((convidadoNoivos) {
     if (convidadoNoivos != null) {
-      AppVariaveis().nomeConvidado = convidadoNoivos['nomeConvidado'] ?? '';
+      nomeReserva = convidadoNoivos['nomeConvidado'] ?? '';
+      telefoneReserva = convidadoNoivos['telefoneConvidado'] ?? '';
     }
   }).catchError((error) {
     print("Erro ao recuperar convidados: $error");
@@ -53,16 +55,18 @@ Widget cardReservas(context, doc, nomeNoivos) {
               ),
             ],
           ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(top: 20),
-              alignment: Alignment.topCenter,
-              child: Text(
-                AppVariaveis().nomeConvidado,
-                style: const TextStyle(color: Colors.black, fontSize: 18),
-              ),
-            ),
-          )
+          Text(
+            '${doc.data()['qtdCotaProdutoVenda']}/${doc.data()['qtdCotaProduto']}',
+            style: const TextStyle(color: Colors.black, fontSize: 14),
+          ),
+          Text(
+            nomeReserva,
+            style: const TextStyle(color: Colors.black, fontSize: 14),
+          ),
+          Text(
+            telefoneReserva,
+            style: const TextStyle(color: Colors.black, fontSize: 14),
+          ),
         ],
       ),
     ),

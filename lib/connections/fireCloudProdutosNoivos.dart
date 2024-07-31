@@ -24,7 +24,7 @@ Future<String> retornarIDProdutosNoivos(uidProdutoNoivos) async {
 }
 
 adicionarProdutosNoivos(context, urlImageProduto, nomeProduto, precoProduto, marcaProduto,
-    lojaSiteProduto, descricaoProduto, varAtivoProduto) async {
+    lojaSiteProduto, descricaoProduto, qtdCotaProduto, qtdCotaProdutoVenda, valorCotaProduto, varAtivoProduto) async {
   try {
     String nomeColecaoProdutosNoivos = await retornarProdutoNomeNoivos();
     CollectionReference produtoNoivos = FirebaseFirestore.instance.collection(nomeColecaoProdutosNoivos);
@@ -38,6 +38,9 @@ adicionarProdutosNoivos(context, urlImageProduto, nomeProduto, precoProduto, mar
       'marcaProduto': marcaProduto,
       'lojaSiteProduto': lojaSiteProduto,
       'descricaoProduto': descricaoProduto,
+      'qtdCotaProduto': qtdCotaProduto,
+      'qtdCotaProdutoVenda': qtdCotaProdutoVenda,
+      'valorCotaProduto': valorCotaProduto,
       'varAtivoProduto': varAtivoProduto
     };
 
@@ -59,7 +62,7 @@ adicionarProdutosNoivos(context, urlImageProduto, nomeProduto, precoProduto, mar
 }
 
 editarProdutosNoivos(context, uidProdutoNoivos, urlImageProduto, nomeProduto, precoProduto, marcaProduto,
-    lojaSiteProduto, descricaoProduto, varAtivoProduto) async {
+    lojaSiteProduto, descricaoProduto, qtdCotaProduto, qtdCotaProdutoVenda, valorCotaProduto, varAtivoProduto) async {
   String nomeColecaoProdutosNoivos = await retornarProdutoNomeNoivos();
 
   Map<String, dynamic> data = {
@@ -70,6 +73,9 @@ editarProdutosNoivos(context, uidProdutoNoivos, urlImageProduto, nomeProduto, pr
     'marcaProduto': marcaProduto,
     'lojaSiteProduto': lojaSiteProduto,
     'descricaoProduto': descricaoProduto,
+    'qtdCotaProduto': qtdCotaProduto,
+    'qtdCotaProdutoVenda': qtdCotaProdutoVenda,
+    'valorCotaProduto': valorCotaProduto,
     'varAtivoProduto': varAtivoProduto
   };
 
@@ -88,6 +94,9 @@ Future<Map<String, String>> listarProdutosNoivos(uidProdutoNoivos) async {
   String marcaProduto = '';
   String lojaSiteProduto = '';
   String descricaoProduto = '';
+  String qtdCotaProduto = '';
+  String qtdCotaProdutoVenda = '';
+  String valorCotaProduto = '';
   String varAtivoProduto = '';
   Map<String, String> produtoNoivos = {};
   String nomeColecaoProdutosNoivos = await retornarProdutoNomeNoivos();
@@ -106,6 +115,9 @@ Future<Map<String, String>> listarProdutosNoivos(uidProdutoNoivos) async {
       marcaProduto = q.docs[0].data()['marcaProduto'];
       lojaSiteProduto = q.docs[0].data()['lojaSiteProduto'];
       descricaoProduto = q.docs[0].data()['descricaoProduto'];
+      qtdCotaProduto = q.docs[0].data()['qtdCotaProduto'];
+      qtdCotaProdutoVenda = q.docs[0].data()['qtdCotaProdutoVenda'];
+      valorCotaProduto = q.docs[0].data()['valorCotaProduto'];
       varAtivoProduto = q.docs[0].data()['varAtivoProduto'];
     }
   });
@@ -119,6 +131,9 @@ Future<Map<String, String>> listarProdutosNoivos(uidProdutoNoivos) async {
     'marcaProduto': marcaProduto,
     'lojaSiteProduto': lojaSiteProduto,
     'descricaoProduto': descricaoProduto,
+    'qtdCotaProduto': qtdCotaProduto,
+    'qtdCotaProdutoVenda': qtdCotaProdutoVenda,
+    'valorCotaProduto': valorCotaProduto,
     'varAtivoProduto': varAtivoProduto
   };
 
@@ -134,6 +149,9 @@ recuperarPorIDProdutosNoivos() async {
   String marcaProduto = '';
   String lojaSiteProduto = '';
   String descricaoProduto = '';
+  String qtdCotaProduto = '';
+  String qtdCotaProdutoVenda = '';
+  String valorCotaProduto = '';
   String varAtivoProduto = '';
   Map<String, String> produtoNoivos = {};
   String nomeColecaoProdutosNoivos = await retornarProdutoNomeNoivos();
@@ -152,6 +170,9 @@ recuperarPorIDProdutosNoivos() async {
       marcaProduto = q.docs[0].data()['marcaProduto'];
       lojaSiteProduto = q.docs[0].data()['lojaSiteProduto'];
       descricaoProduto = q.docs[0].data()['descricaoProduto'];
+      qtdCotaProduto = q.docs[0].data()['qtdCotaProduto'];
+      qtdCotaProdutoVenda = q.docs[0].data()['qtdCotaProdutoVenda'];
+      valorCotaProduto = q.docs[0].data()['valorCotaProduto'];
       varAtivoProduto = q.docs[0].data()['varAtivoProduto'];
     }
   });
@@ -165,6 +186,63 @@ recuperarPorIDProdutosNoivos() async {
     'marcaProduto': marcaProduto,
     'lojaSiteProduto': lojaSiteProduto,
     'descricaoProduto': descricaoProduto,
+    'qtdCotaProduto': qtdCotaProduto,
+    'qtdCotaProdutoVenda': qtdCotaProdutoVenda,
+    'valorCotaProduto': valorCotaProduto,
+    'varAtivoProduto': varAtivoProduto
+  };
+
+  return produtoNoivos;
+}
+
+recuperarProdutosNoivosEspecifico(context, nomeColecaoProdutosNoivos, uidProdutoNoivos) async {
+  String id = '';
+  String uidNoivos = '';
+  String urlImageProduto = '';
+  String nomeProduto = '';
+  String precoProduto = '';
+  String marcaProduto = '';
+  String lojaSiteProduto = '';
+  String descricaoProduto = '';
+  String qtdCotaProduto = '';
+  String qtdCotaProdutoVenda = '';
+  String valorCotaProduto = '';
+  String varAtivoProduto = '';
+  Map<String, String> produtoNoivos = {};
+
+  await FirebaseFirestore.instance
+      .collection(nomeColecaoProdutosNoivos)
+      .where('uidProdutoNoivos', isEqualTo: uidProdutoNoivos)
+      .get()
+      .then((q) {
+    if (q.docs.isNotEmpty) {
+      id = q.docs[0].id;
+      uidNoivos = q.docs[0].data()['uidNoivos'];
+      urlImageProduto = q.docs[0].data()['urlImageProduto'];
+      nomeProduto = q.docs[0].data()['nomeProduto'];
+      precoProduto = q.docs[0].data()['precoProduto'];
+      marcaProduto = q.docs[0].data()['marcaProduto'];
+      lojaSiteProduto = q.docs[0].data()['lojaSiteProduto'];
+      descricaoProduto = q.docs[0].data()['descricaoProduto'];
+      qtdCotaProduto = q.docs[0].data()['qtdCotaProduto'];
+      qtdCotaProdutoVenda = q.docs[0].data()['qtdCotaProdutoVenda'];
+      valorCotaProduto = q.docs[0].data()['valorCotaProduto'];
+      varAtivoProduto = q.docs[0].data()['varAtivoProduto'];
+    }
+  });
+
+  produtoNoivos = {
+    'id': id,
+    'uid': uidNoivos,
+    'urlImageProduto': urlImageProduto,
+    'nomeProduto': nomeProduto,
+    'precoProduto': precoProduto,
+    'marcaProduto': marcaProduto,
+    'lojaSiteProduto': lojaSiteProduto,
+    'descricaoProduto': descricaoProduto,
+    'qtdCotaProduto': qtdCotaProduto,
+    'qtdCotaProdutoVenda': qtdCotaProdutoVenda,
+    'valorCotaProduto': valorCotaProduto,
     'varAtivoProduto': varAtivoProduto
   };
 

@@ -79,7 +79,7 @@ Future<String> retornarProdutoNomeNoivos() async {
 }
 
 adicionarNoivos(context, res, urlImageNoivos, nomeNoiva, nomeNoivo, dtCasamento, email, telefone,
-    senha, varAtivoNoivos) {
+    senhaProdutos, senha, varAtivoNoivos) {
   try {
     String nomeNoivaSemEspacos = nomeNoiva.replaceAll(" ", "");
     String nomeNoivoSemEspacos = nomeNoivo.replaceAll(" ", "");
@@ -94,6 +94,7 @@ adicionarNoivos(context, res, urlImageNoivos, nomeNoiva, nomeNoivo, dtCasamento,
       'dtCasamento': dtCasamento,
       'email': email,
       'telefone': telefone,
+      'senhaProdutos': senhaProdutos,
       'varAtivoNoivos': varAtivoNoivos
     });
   } catch (e) {
@@ -101,7 +102,7 @@ adicionarNoivos(context, res, urlImageNoivos, nomeNoiva, nomeNoivo, dtCasamento,
   }
 }
 
-editarNoivos(context, uidNoivos, urlImageNoivos, nomeNoiva, nomeNoivo, dtCasamento, email, telefone,
+editarNoivos(context, uidNoivos, urlImageNoivos, nomeNoiva, nomeNoivo, dtCasamento, email, telefone, senhaProdutos,
     senha, varAtivoNoivos) async {
   if (senha.isNotEmpty) {
     FirebaseAuth.instance.currentUser!.updatePassword(senha);
@@ -114,6 +115,7 @@ editarNoivos(context, uidNoivos, urlImageNoivos, nomeNoiva, nomeNoivo, dtCasamen
     'dtCasamento': dtCasamento,
     'email': email,
     'telefone': telefone,
+    'senhaProdutos': senhaProdutos,
     'varAtivoNoivos': varAtivoNoivos
   };
   String id = await retornarIDNoivos();
@@ -133,6 +135,7 @@ Future<Map<String, String>> listarNoivos() async {
   String dtCasamento = '';
   String email = '';
   String telefone = '';
+  String senhaProdutos = '';
   String varAtivoNoivos = '';
   Map<String, String> noivos = {};
 
@@ -151,6 +154,7 @@ Future<Map<String, String>> listarNoivos() async {
       dtCasamento = q.docs[0].data()['dtCasamento'];
       email = q.docs[0].data()['email'];
       telefone = q.docs[0].data()['telefone'];
+      senhaProdutos = q.docs[0].data()['senhaProdutos'];
       varAtivoNoivos = q.docs[0].data()['varAtivoNoivos'];
     }
   });
@@ -165,8 +169,61 @@ Future<Map<String, String>> listarNoivos() async {
     'dtCasamento': dtCasamento,
     'email': email,
     'telefone': telefone,
+    'senhaProdutos': senhaProdutos,
     'varAtivoNoivos': varAtivoNoivos
   };
 
   return noivos;
 }
+
+Future<Map<String, String>> listarNoivosPorID(idNoivos) async {
+  String id = '';
+  String uidNoivos = '';
+  String urlImageNoivos = '';
+  String nomeNoiva = '';
+  String nomeNoivo = '';
+  String nomeNoivos = '';
+  String dtCasamento = '';
+  String email = '';
+  String telefone = '';
+  String senhaProdutos = '';
+  String varAtivoNoivos = '';
+  Map<String, String> noivo = {};
+
+  await FirebaseFirestore.instance
+      .collection(nomeColecao)
+      .where('uidNoivos', isEqualTo: idNoivos)
+      .get()
+      .then((q) {
+    if (q.docs.isNotEmpty) {
+      id = q.docs[0].id;
+      uidNoivos = q.docs[0].data()['uidNoivos'];
+      urlImageNoivos = q.docs[0].data()['urlImageNoivos'];
+      nomeNoiva = q.docs[0].data()['nomeNoiva'];
+      nomeNoivo = q.docs[0].data()['nomeNoivo'];
+      nomeNoivos = q.docs[0].data()['nomeNoivos'];
+      dtCasamento = q.docs[0].data()['dtCasamento'];
+      email = q.docs[0].data()['email'];
+      telefone = q.docs[0].data()['telefone'];
+      senhaProdutos = q.docs[0].data()['senhaProdutos'];
+      varAtivoNoivos = q.docs[0].data()['varAtivoNoivos'];
+    }
+  });
+
+  noivo = {
+    'id': id,
+    'uidNoivos': uidNoivos,
+    'urlImageNoivos': urlImageNoivos,
+    'nomeNoiva': nomeNoiva,
+    'nomeNoivo': nomeNoivo,
+    'nomeNoivos': nomeNoivos,
+    'dtCasamento': dtCasamento,
+    'email': email,
+    'telefone': telefone,
+    'senhaProdutos': senhaProdutos,
+    'varAtivoNoivos': varAtivoNoivos
+  };
+
+  return noivo;
+}
+

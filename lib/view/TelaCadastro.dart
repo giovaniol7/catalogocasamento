@@ -31,12 +31,13 @@ class _TelaCadastroState extends State<TelaCadastro> {
         AppVariaveis().txtDtCasamento.text.isNotEmpty &&
         AppVariaveis().txtEmail.text.isNotEmpty &&
         AppVariaveis().txtTelefone.text.isNotEmpty &&
+        AppVariaveis().txtSenhaProdutos.text.isNotEmpty &&
         AppVariaveis().txtSenha.text.isNotEmpty &&
         AppVariaveis().txtSenhaCofirmar.text.isNotEmpty) {
       if (AppVariaveis().txtEmail.text.contains('@')) {
         if (AppVariaveis().txtSenha.text != AppVariaveis().txtSenhaCofirmar.text) {
           erro(context, 'Senhas não coincidem.');
-        } else if (AppVariaveis().txtSenha.text.length >= 6) {
+        } else if (AppVariaveis().txtSenha.text.length >= 6 && AppVariaveis().txtSenhaProdutos.text.length >= 6) {
           AppVariaveis().urlImageNoivos = (AppVariaveis().fileImageNoivos != null
               ? await uploadImageNoivos(AppVariaveis().fileImageNoivos!, 'noivos')
               : '')!;
@@ -49,6 +50,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
               AppVariaveis().txtDtCasamento.text,
               AppVariaveis().txtEmail.text,
               AppVariaveis().txtTelefone.text,
+              AppVariaveis().txtSenhaProdutos.text,
               AppVariaveis().txtSenha.text,
               AppVariaveis().varAtivoNoivos);
         } else {
@@ -190,6 +192,30 @@ class _TelaCadastroState extends State<TelaCadastro> {
                             boardType: 'numeros',
                             key: AppVariaveis().keyTelefone,
                             validator: true,
+                          ),
+                          const SizedBox(height: 20),
+                          Consumer<AppVariaveis>(
+                            builder: (context, appVariaveis, child) {
+                              return textFormField(
+                                'Senha para acesso dos Convidados',
+                                AppVariaveis().txtSenhaProdutos,
+                                icone: Icons.lock,
+                                key: AppVariaveis().keySenhaProdutos,
+                                validator: true,
+                                sufIcon: IconButton(
+                                  icon: Icon(
+                                    AppVariaveis().obscureText3
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: AppEstilo().colorIconPadrao,
+                                  ),
+                                  onPressed: () {
+                                    AppVariaveis().toggleObscureText3();
+                                  },
+                                ),
+                                senha: AppVariaveis().obscureText3,
+                              );
+                            },
                           ),
                           const SizedBox(height: 20),
                           Consumer<AppVariaveis>(

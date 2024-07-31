@@ -5,23 +5,7 @@ import '../controllers/variaveis.dart';
 import '../widgets/mensagem.dart';
 import 'fireAuth.dart';
 import 'fireCloudNoivos.dart';
-
-/*Future<String> retornarIDConvidados() async {
-  String id = '';
-  String nomeColecaoNoivos = await retornarProdutoNomeNoivos();
-
-  await FirebaseFirestore.instance
-      .collection(nomeColecaoNoivos)
-      .where('uid', isEqualTo: idNoivos())
-      .get()
-      .then((q) {
-    if (q.docs.isNotEmpty) {
-      id = q.docs[0].id;
-    }
-  });
-
-  return id;
-}*/
+import 'fireCloudProdutosNoivos.dart';
 
 adicionarConvidados(context, nomeConvidado, telefoneConvidado, nomeNoivos, uidProdutoNoivos) async {
   try {
@@ -40,7 +24,6 @@ adicionarConvidados(context, nomeConvidado, telefoneConvidado, nomeNoivos, uidPr
     };
 
     DocumentReference novoDocumento = await convidadosNoivos.add(data);
-    print("Convidado adicionado com sucesso: ${novoDocumento.id}");
     await convidadosNoivos.where('nomeConvidado', isEqualTo: nomeConvidado).get().then((us) {
       if (us.docs.isNotEmpty) {
         uidConvidado = us.docs[0].id;
@@ -50,7 +33,6 @@ adicionarConvidados(context, nomeConvidado, telefoneConvidado, nomeNoivos, uidPr
     });
 
     await novoDocumento.update({'uidConvidado': uidConvidado});
-    print("ID do convidado atualizado com sucesso: $uidConvidado");
 
     editarConvidadosProdutosNoivos(context, nomeColecaoProdutosNoivos, uidProdutoNoivos);
 
@@ -58,7 +40,6 @@ adicionarConvidados(context, nomeConvidado, telefoneConvidado, nomeNoivos, uidPr
     AppVariaveis().reset();
     Navigator.of(context).popUntil((route) => route.isFirst);
   } catch (e) {
-    print('Erro ao reservar produto.');
     erro(context, 'Erro ao reservar produto. Tente novamente.');
   }
 }
@@ -99,11 +80,23 @@ recuperarConvidadosPorIdProduto(idProduto) async {
 }
 
 editarConvidadosProdutosNoivos(context, nomeColecaoProdutosNoivos, uidProdutoNoivos) async {
-  var varAtivoProduto = "0";
+  Map<String, String> produtoNoivos =
+      await recuperarProdutosNoivosEspecifico(context, nomeColecaoProdutosNoivos, uidProdutoNoivos);
 
-  Map<String, dynamic> data = {'varAtivoProduto': varAtivoProduto};
-  await FirebaseFirestore.instance
-      .collection(nomeColecaoProdutosNoivos)
-      .doc(uidProdutoNoivos)
-      .update(data);
+  if (produtoNoivos['qtdCotaProdutoVenda'] == '1') {
+    var varAtivoProduto = "0";
+
+    Map<String, dynamic> data = {'varAtivoProduto': varAtivoProduto};
+    await FirebaseFirestore.instance
+        .collection(nomeColecaoProdutosNoivos)
+        .doc(uidProdutoNoivos)
+        .update(data);
+  } else {
+    int qtdCotaProdutoVenda = int.parse(produtoNoivos['qtdCotaProdutoVenda']!) - 1;
+    Map<String, dynamic> data = {'qtdCotaProdutoVenda': qtdCotaProdutoVenda.toString()};
+    await FirebaseFirestore.instance
+        .collection(nomeColecaoProdutosNoivos)
+        .doc(uidProdutoNoivos)
+        .update(data);
+  }
 }

@@ -14,10 +14,10 @@ idNoivos() {
   }
 }
 
-criarContaNoivos(context, urlImage, nomeNoiva, nomeNoivo, dtCasamento, email, telefone, senha, varAtivoNoivos) async {
+criarContaNoivos(context, urlImage, nomeNoiva, nomeNoivo, dtCasamento, email, telefone, senhaProdutos, senha, varAtivoNoivos) async {
   FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: senha).then((res) {
     adicionarNoivos(context, res.user!.uid.toString(), urlImage, nomeNoiva, nomeNoivo, dtCasamento,
-        email, telefone, senha, varAtivoNoivos);
+        email, telefone, senhaProdutos, senha, varAtivoNoivos);
     sucesso(context, 'O cadastro foi criado com sucesso!');
     AppVariaveis().reset();
     Navigator.pop(context);

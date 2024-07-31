@@ -19,6 +19,7 @@ class AppVariaveis extends ChangeNotifier {
   TextEditingController txtTelefone = TextEditingController();
   TextEditingController txtSenha = TextEditingController();
   TextEditingController txtSenhaCofirmar = TextEditingController();
+  TextEditingController txtSenhaProdutos = TextEditingController();
   GlobalKey<FormState> keyNomeNoiva = GlobalKey<FormState>();
   GlobalKey<FormState> keyNomeNoivo = GlobalKey<FormState>();
   GlobalKey<FormState> keyDtCasamento = GlobalKey<FormState>();
@@ -26,6 +27,7 @@ class AppVariaveis extends ChangeNotifier {
   GlobalKey<FormState> keyTelefone = GlobalKey<FormState>();
   GlobalKey<FormState> keySenha = GlobalKey<FormState>();
   GlobalKey<FormState> keySenhaConfirmar = GlobalKey<FormState>();
+  GlobalKey<FormState> keySenhaProdutos = GlobalKey<FormState>();
   String urlImageNoivos = '';
   String urlImageNoivosTemp = '';
   String UIDNoivos = '';
@@ -54,6 +56,7 @@ class AppVariaveis extends ChangeNotifier {
   //Convidados
   String uidConvidado = '';
   String nomeConvidado = '';
+  String telefoneConvidado = '';
   TextEditingController txtNomeConvidado = TextEditingController();
   TextEditingController txtTelefoneConvidado = TextEditingController();
   GlobalKey<FormState> keyNomeConvidado = GlobalKey<FormState>();
@@ -63,6 +66,12 @@ class AppVariaveis extends ChangeNotifier {
   bool boolApagarImagem = false;
   bool obscureText = true;
   bool obscureText2 = true;
+  bool obscureText3 = true;
+  bool switchValue = false;
+  int qtdCotaProduto = 1;
+  int qtdCotaProdutoVenda = 1;
+  String valorCotaProduto = '';
+  String valorCotaProdutoVenda = '';
 
   //Função
   void toggleObscureText() {
@@ -72,6 +81,11 @@ class AppVariaveis extends ChangeNotifier {
 
   void toggleObscureText2() {
     obscureText2 = !obscureText2;
+    notifyListeners();
+  }
+
+  void toggleObscureText3() {
+    obscureText3 = !obscureText3;
     notifyListeners();
   }
 
@@ -94,6 +108,7 @@ class AppVariaveis extends ChangeNotifier {
     txtNomeNoivo.clear();
     txtDtCasamento.clear();
     txtTelefone.clear();
+    txtSenhaProdutos.clear();
     txtSenhaCofirmar.clear();
     varAtivoNoivos = 1;
     urlImageNoivos = '';
@@ -111,6 +126,7 @@ class AppVariaveis extends ChangeNotifier {
     boolApagarImagem = false;
     obscureText = true;
     obscureText2 = true;
+    obscureText3 = true;
     notifyListeners();
   }
 }
