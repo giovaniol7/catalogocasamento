@@ -615,21 +615,21 @@
     },
     {
       "name": "test",
-      "rootUri": "file:///C:/Users/gihol/AppData/Local/Pub/Cache/hosted/pub.dev/test-1.25.8",
+      "rootUri": "file:///C:/Users/gihol/AppData/Local/Pub/Cache/hosted/pub.dev/test-1.25.7",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.2"
     },
     {
       "name": "test_api",
-      "rootUri": "file:///C:/Users/gihol/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.3",
+      "rootUri": "file:///C:/Users/gihol/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.2",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.2"
     },
     {
       "name": "test_core",
-      "rootUri": "file:///C:/Users/gihol/AppData/Local/Pub/Cache/hosted/pub.dev/test_core-0.6.5",
+      "rootUri": "file:///C:/Users/gihol/AppData/Local/Pub/Cache/hosted/pub.dev/test_core-0.6.4",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.2"
     },
     {
       "name": "typed_data",
@@ -704,10 +704,10 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-07-22T17:57:40.402997Z",
+  "generated": "2024-08-08T16:04:20.156542Z",
   "generator": "pub",
-  "generatorVersion": "3.6.0-26.0.dev",
+  "generatorVersion": "3.5.0",
   "flutterRoot": "file:///D:/src/flutter",
-  "flutterVersion": "3.22.2",
+  "flutterVersion": "3.24.0",
   "pubCache": "file:///C:/Users/gihol/AppData/Local/Pub/Cache"
 }
